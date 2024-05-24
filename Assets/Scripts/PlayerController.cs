@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float sideSpeed = 5f;
     bool canJump = false;
     Rigidbody playerRb;
+    Vector3 startPos = new Vector3(0f, 1f, 5f);
 
     // Start is called before the first frame update
     void Start()
@@ -44,5 +45,22 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         canJump = true;
+        if(other.gameObject.tag == "Obstacle")
+        {
+            playerRb.velocity = Vector3.zero;
+            canJump = false;
+            transform.position = startPos;
+        }
+        if(other.gameObject.tag == "Finish")
+        {
+            playerRb.velocity = Vector3.zero;
+            canJump = false;
+            transform.position = startPos;
+        }
+         if(other.gameObject.tag == "Bouncy")
+        {
+            canJump = false;
+            playerRb.AddForce(0f, 1000, 0f);
+        }
     }
 }
